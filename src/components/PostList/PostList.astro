@@ -1,0 +1,22 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import PostCard from '../PostCard/PostCard.astro';
+
+interface Props {
+  posts: CollectionEntry<'blog'>[];
+}
+
+const { posts } = Astro.props;
+---
+
+<section class="post-list" aria-label="Blog posts">
+  {posts.map((post) => <PostCard post={post} />)}
+</section>
+
+<style>
+  .post-list {
+    display: flex;
+    flex-direction: column;
+    /* Columna vertical centrada horizontalmente por el .container del layout */
+  }
+</style>

@@ -1,43 +1,35 @@
-## Portfolio website
+# lucgutm.github.io
 
-This is a portfolio-blog website built using the Astro metaframework.
+Bitácora técnica de Lucas Gutiérrez: blog personal de proyectos y apuntes de
+ingeniería de software, construido con [Astro](https://astro.build).
+
+- Posts escritos en Markdown (colección en `src/content/blog/`).
+- Generación estática, sin frameworks de cliente ni trackers.
+- Despliegue automático a GitHub Pages vía GitHub Actions al hacer push a `main`.
+
+## Desarrollo
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install
+npm run dev     # servidor local en http://localhost:4321
+npm run build   # build de producción en ./dist/
+npm run preview # previsualizar el build
 ```
 
-## Project Structure
+## Borradores
 
-Inside of this Astro project, you'll see the following folders and files:
+Un post se marca como borrador con `draft: true` en su frontmatter. Los
+borradores se muestran en dev para poder revisarlos, pero quedan excluidos del
+build de producción (no aparecen en el listado ni generan página).
+
+## Estructura
 
 ```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+src/
+├── content/blog/        # posts en markdown
+├── components/          # Header, Footer, PostCard, PostList, PostDetail
+├── layouts/             # BaseLayout (head, meta, fuentes)
+├── pages/               # index (listado) y about
+├── styles/              # tokens de diseño y estilos globales
+└── utils/               # helpers de contenido (filtro de borradores)
 ```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## TODO:
-
-- [ ] Finish more projects and add them here

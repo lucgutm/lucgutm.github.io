@@ -1,0 +1,25 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostDetail from '../../components/PostDetail/PostDetail.astro';
+import { isPublished } from '../../utils/posts';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  // En producción los borradores no generan página (su URL queda en 404);
+  // en dev sí, para poder revisarlos.
+  return posts.filter(isPublished).map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <PostDetail post={post}>
+    <Content />
+  </PostDetail>
+</BaseLayout>

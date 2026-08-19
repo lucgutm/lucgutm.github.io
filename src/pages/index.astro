@@ -1,18 +1,16 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostList from '../components/PostList/PostList.astro';
+import { getPublishedPosts } from '../utils/posts';
 
+const posts = (await getPublishedPosts()).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/icon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Temporary site</title>
-	</head>
-	<body>
-		<a href="/">Home</a>
-		<a href="/about/">About</a>
-		<h1>Index content</h1>
-	</body>
-</html>
+<BaseLayout
+  title="Bitácora técnica"
+  description="Bitácora técnica y proyectos de ingeniería de software."
+>
+  <PostList posts={posts} />
+</BaseLayout>

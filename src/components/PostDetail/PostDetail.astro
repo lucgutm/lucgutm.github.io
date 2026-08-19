@@ -1,0 +1,130 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { title, description, pubDate, tags } = post.data;
+const formattedDate = pubDate.toLocaleDateString('es-CL', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  timeZone: 'UTC'
+});
+const wordCount = (post.body ?? '').split(/\s+/).filter(Boolean).length;
+const readTime = Math.max(1, Math.round(wordCount / 100));
+---
+
+<article class="post-detail">
+  <a class="post-detail__back" href="/">← Volver a los artículos</a>
+
+  <ul class="post-detail__tags" aria-label="Tags">
+    {tags.map((tag) => <li class="post-detail__tag">{tag}</li>)}
+  </ul>
+
+  <h1 class="post-detail__title">{title}</h1>
+
+  <div class="post-detail__meta">
+    <time datetime={pubDate.toISOString()}>{formattedDate}</time>
+    <span class="post-detail__meta-sep" aria-hidden="true">•</span>
+    <span>{readTime} min de lectura</span>
+  </div>
+
+  <div class="post-detail__content prose">
+    <slot />
+  </div>
+</article>
+
+<script>
+  // Único JS del sitio: botón "Copy" en los bloques de código (nativo, sin librerías).
+  const preBlocks = document.querySelectorAll('.post-detail__content pre');
+
+  preBlocks.forEach((pre) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'code-block__copy';
+    button.textContent = 'Copy';
+    button.setAttribute('aria-label', 'Copy code to clipboard');
+
+    button.addEventListener('click', async () => {
+      const code = pre.querySelector('code');
+      const text = code ? code.textContent : '';
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = 'Copied';
+        button.classList.add('code-block__copy--copied');
+        setTimeout(() => {
+          button.textContent = 'Copy';
+          button.classList.remove('code-block__copy--copied');
+        }, 2000);
+      } catch {
+        /* clipboard no disponible: sin feedback */
+      }
+    });
+
+    pre.appendChild(button);
+  });
+</script>
+
+<style>
+  .post-detail__back {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .post-detail__back:hover {
+    color: var(--brand-cyan);
+  }
+
+  .post-detail__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0 0 1rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .post-detail__tag {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    border: 1px solid var(--surface-border);
+    background-color: var(--surface-card);
+    border-radius: 4px;
+    padding: 0.25rem 0.6rem;
+  }
+
+  .post-detail__title {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-sans);
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: var(--text-primary);
+  }
+
+  .post-detail__meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+  }
+
+  .post-detail__meta-sep {
+    opacity: 0.6;
+  }
+</style>

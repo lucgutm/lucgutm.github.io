@@ -1,19 +1,206 @@
 ---
-
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <link rel="icon" type="image/svg+xml" href="/icon.svg" />
-        <meta name="viewport" content="width=device-width" />
-        <meta name="generator" content={Astro.generator} />
-        <title>About</title>
-    </head>
-    <body>
-        <a href="/">Home</a>
-        <a href="/about/">About</a>
+<BaseLayout title="About" description="Sobre mí y este blog.">
+  <section class="about">
+    <h1 class="about__title">Lucas Gutiérrez</h1>
+    <p class="about__descriptor">
+      Frontend engineer
+    </p>
+    <div class="about__accent" aria-hidden="true"></div>
 
-        <h1>About</h1>
-    </body>
-</html>
+    <div class="about__intro">
+      <p>
+        Soy ingeniero de software, egresado de Ingeniería Civil en Computación
+        de la Pontificia Universidad Católica de Chile. He trabajado como
+        frontend engineer, donde desarrollé desde landing
+        pages y backoffice hasta webapps, siempre con foco en performance, UX y
+        arquitectura mantenible.
+      </p>
+      <p>
+        También construyo herramientas educativas. PhotoTick, por ejemplo, es
+        una app Android que corrige pruebas de selección múltiple escaneando la
+        hoja con la cámara del celular: 100% offline y gratis, pensada para
+        docentes que no tienen tiempo de calificar a mano.
+      </p>
+      <p>
+        Este blog es mi bitácora técnica: cada proyecto que construyo queda
+        documentado acá, con las decisiones, los errores y lo aprendido en el
+        camino.
+      </p>
+    </div>
+
+    <section class="about__card">
+      <h2 class="about__card-title">En qué estoy enfocado</h2>
+      <ul class="about__list">
+        <li class="about__item">
+          PhotoTick y herramientas educativas offline para docentes.
+        </li>
+        <li class="about__item">
+          Frontend con foco en performance, UX y arquitectura mantenible.
+        </li>
+        <li class="about__item">
+          Documentar proyectos y decisiones en este blog.
+        </li>
+      </ul>
+    </section>
+
+    <section class="about__connect">
+      <h2 class="about__connect-title">Contacto</h2>
+      <p class="about__connect-text">
+        ¿Preguntas, feedback o solo quieres conversar? Escríbeme por cualquiera
+        de estos canales.
+      </p>
+      <div class="about__links">
+        <a class="about__link" href="mailto:lucgutm@gmail.com">
+          lucgutm@gmail.com
+        </a>
+        <a
+          class="about__link"
+          href="https://github.com/lucgutm"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          github.com/lucgutm
+        </a>
+      </div>
+    </section>
+  </section>
+</BaseLayout>
+
+<style>
+  .about {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .about__title {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+  }
+
+  .about__descriptor {
+    margin: -1.5rem 0 0;
+    font-family: var(--font-sans);
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--brand-cyan);
+  }
+
+  .about__accent {
+    width: 3rem;
+    height: 2px;
+    background-color: var(--brand-cyan-dim);
+  }
+
+  .about__intro {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    opacity: 0.9;
+  }
+
+  .about__intro p {
+    margin: 0;
+  }
+
+  .about__card {
+    background-color: var(--surface-card);
+    border-left: 3px solid var(--brand-cyan-dim);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .about__card-title {
+    margin: 0 0 1rem;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--brand-cyan-dim);
+  }
+
+  .about__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .about__item {
+    padding-left: 1.25rem;
+    position: relative;
+    font-size: 1rem;
+    opacity: 0.9;
+  }
+
+  .about__item::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--brand-cyan-dim);
+  }
+
+  .about__connect {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--surface-border);
+  }
+
+  .about__connect-title {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+  }
+
+  .about__connect-text {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+  }
+
+  .about__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  .about__link {
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    background-color: var(--surface-card);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius);
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .about__link:hover {
+    color: var(--brand-cyan);
+    border-color: var(--brand-cyan-dim);
+  }
+</style>

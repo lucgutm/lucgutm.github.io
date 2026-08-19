@@ -1,0 +1,51 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <p class="footer__copy">© {year} Lucas Gutiérrez · Bitácora técnica</p>
+    <nav class="footer__nav" aria-label="Footer navigation">
+      <a class="footer__link" href="/">Posts</a>
+      <a class="footer__link" href="/about">About</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--surface-border);
+    background-color: var(--surface-bg);
+  }
+
+  .footer__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 2rem;
+  }
+
+  .footer__copy {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+  }
+
+  .footer__nav {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .footer__link {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer__link:hover {
+    color: var(--brand-cyan);
+  }
+</style>

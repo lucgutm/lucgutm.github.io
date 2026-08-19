@@ -1,0 +1,114 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { title, description, pubDate, tags } = post.data;
+const formattedDate = pubDate.toLocaleDateString('es-CL', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+---
+
+<article class="post-card">
+  <a class="post-card__link" href={`/posts/${post.id}/`}>
+    <time class="post-card__date" datetime={pubDate.toISOString()}>
+      {formattedDate}
+    </time>
+    <div class="post-card__body">
+      <h2 class="post-card__title">{title}</h2>
+      <p class="post-card__excerpt">{description}</p>
+      <ul class="post-card__tags" aria-label="Tags">
+        {
+          tags.map((tag) => (
+            <li class="post-card__tag">{tag}</li>
+          ))
+        }
+      </ul>
+    </div>
+  </a>
+</article>
+
+<style>
+  .post-card {
+    border-bottom: 1px solid var(--surface-border);
+    transition: border-color 0.3s;
+  }
+
+  .post-card:hover {
+    border-color: var(--brand-cyan);
+  }
+
+  .post-card__link {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 2rem;
+    padding-block: 2rem;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .post-card__date {
+    padding-top: 0.3rem;
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+  }
+
+  .post-card__title {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-sans);
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+    color: var(--text-primary);
+    transition: color 0.2s;
+  }
+
+  .post-card:hover .post-card__title {
+    color: var(--brand-cyan);
+  }
+
+  .post-card__excerpt {
+    margin: 0 0 1rem;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .post-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .post-card__tag {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    border: 1px solid var(--surface-border);
+    border-radius: 4px;
+    padding: 0.25rem 0.5rem;
+    background-color: var(--surface-bg);
+  }
+
+  @media (max-width: 560px) {
+    .post-card__link {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+  }
+</style>
