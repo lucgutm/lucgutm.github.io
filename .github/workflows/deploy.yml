@@ -8,6 +8,11 @@ on:
   # Allows you to run this workflow manually from the Actions tab on GitHub.
   workflow_dispatch:
 
+# Cancel any in-progress run when a new commit is pushed to main
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
 # Allow this job to clone the repo and create a page deployment
 permissions:
   contents: read
@@ -19,12 +24,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout your repository using git
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Install, build, and upload your site
-        uses: withastro/action@v3
-        # with:
+        uses: withastro/action@v6
+        with:
+          node-version: 24 # Pin Node to 24; matches engines: >=22.12.0 in package.json
           # path: . # The root location of your Astro project inside the repository. (optional)
-          # node-version: 20 # The specific version of Node that should be used to build your site. Defaults to 20. (optional)
           # package-manager: pnpm@latest # The Node package manager that should be used to install dependencies and build your site. Automatically detected based on your lockfile. (optional)
 
   deploy:
@@ -36,4 +41,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

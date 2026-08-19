@@ -1,0 +1,54 @@
+---
+import Header from '../components/Header/Header.astro';
+import Footer from '../components/Footer/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+const pageDescription =
+  description ??
+  'Bitácora técnica de Lucas Gutiérrez: proyectos, decisiones y aprendizajes de ingeniería de software.';
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={pageDescription} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Lucas Gutiérrez — Bitácora técnica" />
+    <meta property="og:locale" content="es_CL" />
+    <meta property="og:url" content="https://lucgutm.github.io" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={pageDescription} />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.cdnfonts.com/css/libertinus-serif" rel="stylesheet" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <Header />
+    <main class="container site-main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .site-main {
+    flex: 1 0 auto;
+    padding-block: 3rem 4rem;
+  }
+</style>
